@@ -1,5 +1,5 @@
 /* --COPYRIGHT--,BSD_EX
- * Copyright (c) 2018, Texas Instruments Incorporated
+ * Copyright (c) 2016, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,32 +43,41 @@
  *
  * --/COPYRIGHT--*/
 //******************************************************************************
-//  MSP430FR267x Demo - Toggle P1.0 using software
+//  MSP430FR235x Demo - Toggle P1.0 using software
 //
-//  Description: Toggle P1.0 every 0.05s using software.
-//  By default, FR267x select XT1 as FLL reference.
+//  Description: Toggle P1.0 every 0.1s using software.
+//  By default, FR235x select XT1 as FLL reference.
 //  If XT1 is present, the PxSEL(XIN & XOUT) needs to configure.
 //  If XT1 is absent, switch to select REFO as FLL reference automatically.
 //  XT1 is considered to be absent in this example.
 //  ACLK = default REFO ~32768Hz, MCLK = SMCLK = default DCODIV ~1MHz.
 //
-//           MSP430FR2676
+//           MSP430FR2355
 //         ---------------
 //     /|\|               |
 //      | |               |
 //      --|RST            |
 //        |           P1.0|-->LED
 //
-//   Longyu Fang
+//   Cash Hao
 //   Texas Instruments Inc.
-//   August 2018
-//   Built with IAR Embedded Workbench v7.12.1 & Code Composer Studio v8.1.0
+//   November 2016
+//   Built with IAR Embedded Workbench v6.50.0 & Code Composer Studio v6.2.0
 //******************************************************************************
 #include <msp430.h>
 
 int main(void)
 {
+    WDTCTL = WDTPW | WDTHOLD; // Stop watchdog timer
+
+    P1OUT &= ~BIT0; // Clear P1.0 output latch for a defined power-on state
+    P1DIR |= BIT0; // Set P1.0 to output direction
+
+    PM5CTL0 &= ~LOCKLPM5; // Disable the GPIO power-on default high-impedance mode
+                          // to activate previously configured port settings
 
     while (1) {
+        P1OUT ^= BIT0; // Toggle P1.0 using exclusive-OR
+        __delay_cycles(100000); // Delay for 100000*(1/MCLK)=0.1s
     }
 }
