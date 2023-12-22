@@ -107,7 +107,7 @@ Boolean algebra provides a systematic and formalized way to express and manipula
 | A | A' |
 | --- | ---- |
 | 0 | 1  |
-| 1 | 1  |
+| 1 | 0  |
 
 **OR (Disjunction):**
 
@@ -223,7 +223,7 @@ Boolean algebra laws are a set of rules and principles that govern the manipulat
 2. Draw truth table for C+(D*C)'
 
 
-   | C | D | D*C | (D*C)' | C+(D*C') |
+   | C | D | D*C | (D*C)' | C+(D*C)' |
    | --- | --- | ----- | -------- | ---------- |
    | 0 | 0 | 0   | 1      | 1        |
    | 0 | 1 | 0   | 1      | 1        |
